@@ -1,10 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ethers } from 'ethers';
+import React, {
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
+
 import BigNumber from 'bignumber.js';
+import { ethers } from 'ethers';
 import { isAddress } from 'ethers/lib/utils';
 import { toast } from 'react-toastify';
 import shallow from 'zustand/shallow';
-import { Pool, attemptPromiseRecursively, StaticPoolInfo, KnownNetwork } from '@tracer-protocol/pools-js';
 import { Notification } from '~/components/General/Notification';
 import { useStore } from '~/store/main';
 import { selectUserCommitActions } from '~/store/PendingCommitSlice';
@@ -15,18 +19,31 @@ import {
     selectPoolsInitialized,
 } from '~/store/PoolInstancesSlice';
 import { KnownPoolsInitialisationErrors } from '~/store/PoolInstancesSlice/types';
-import { selectImportPool, selectRemovePool } from '~/store/PoolsSlice';
+import {
+    selectImportPool,
+    selectRemovePool,
+} from '~/store/PoolsSlice';
 import { selectWeb3Info } from '~/store/Web3Slice';
-
 import { V2_SUPPORTED_NETWORKS } from '~/types/networks';
 import { randomIntInRange } from '~/utils/helpers';
-import { removeImportedPool, saveImportedPoolsToLocalStorage } from '~/utils/pools';
+import {
+    removeImportedPool,
+    saveImportedPoolsToLocalStorage,
+} from '~/utils/pools';
 import { isSupportedNetwork } from '~/utils/supportedNetworks';
 import { fetchPendingCommits } from '~/utils/tracerAPI';
+
+import {
+    attemptPromiseRecursively,
+    KnownNetwork,
+    Pool,
+    StaticPoolInfo,
+} from '@tracer-protocol/pools-js';
+
 import { useAllPoolLists } from '../useAllPoolLists';
 
-const MAX_RETRY_COUNT = 10;
-const AUTO_DISMISS = 5000; // 5 seconds
+const MAX_RETRY_COUNT = 3000;
+const AUTO_DISMISS = 5000000; // 5 seconds
 
 /**
  * Wrapper to update all pools information
@@ -185,12 +202,13 @@ export const useUpdatePoolInstances = (): void => {
                                             KnownPoolsInitialisationErrors.ExceededMaxRetryCount,
                                         );
                                     }
+                                    await new Promise((resolve) => setTimeout(resolve, 1000));
 
                                     return retryCount < MAX_RETRY_COUNT;
                                 },
                                 maxAttempts: MAX_RETRY_COUNT,
                             }).catch((error) => {
-                                console.debug(
+                                console.log(
                                     `Abandoning loading of ${pool.name || pool.address}, retry limit reached: ${error}`,
                                 );
 

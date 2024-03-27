@@ -1,14 +1,10 @@
+import { Network } from '~/types/networks';
+
 import { KnownNetwork } from '@tracer-protocol/pools-js';
 import { NETWORKS } from '@tracer-protocol/pools-js/utils/constants';
-import { Network } from '~/types/networks';
 
 export const UNKNOWN_NETWORK = '0';
 
-export const knownNetworkToSubgraphUrl: Partial<Record<KnownNetwork, string>> = {
-    [NETWORKS.ARBITRUM]: 'https://api.thegraph.com/subgraphs/name/tracer-protocol/perpetual-pools-v2-arbitrum-one',
-    [NETWORKS.ARBITRUM_RINKEBY]:
-        'https://api.thegraph.com/subgraphs/name/tracer-protocol/perpetual-pools-v2-arbitrum-rinkeby',
-};
 
 /**
  * Network store which allows swapping between networks and fetching from different data sources.
@@ -42,10 +38,10 @@ export const networkConfig: Record<KnownNetwork, Network> = {
         logoTicker: NETWORKS.ARBITRUM,
         previewUrl: 'https://arbiscan.io/',
         hex: '0xA4B1',
-        publicRPC: process.env.NEXT_PUBLIC_MAINNET_RPC ?? 'https://arb1.arbitrum.io/rpc',
-        publicWebsocketRPC: process.env.NEXT_PUBLIC_MAINNET_WSS_RPC,
-        usdcAddress: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8',
-        tcrAddress: '0xA72159FC390f0E3C6D415e658264c7c4051E9b87',
+        publicRPC: "https://arb-mainnet.g.alchemy.com/v2/KebS3a1XP3rzFHvzpsokZZHbqHQjmF_e" ?? 'https://arb1.arbitrum.io/rpc',
+        publicWebsocketRPC: "wss://arb-mainnet.g.alchemy.com/v2/KebS3a1XP3rzFHvzpsokZZHbqHQjmF_e",
+        usdcAddress: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
+        tcrAddress: '0x1C5884AB83729f47Cd2d2c383d5C433456AEad8E',
         knownMarketSpotPriceChainlinkFeeds: {
             'BTC/USD': {
                 feedAddress: '0x6ce185860a4963106506C203335A2910413708e9',

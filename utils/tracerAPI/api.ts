@@ -1,18 +1,26 @@
 import BigNumber from 'bignumber.js';
-import { CommitEnum, KnownNetwork, NETWORKS } from '@tracer-protocol/pools-js';
 import { CommitTypeFilter } from '~/archetypes/Portfolio/state';
 import { CommitTypeMap } from '~/constants/commits';
-import { knownNetworkToSubgraphUrl } from '~/constants/networks';
-import { PendingCommits, GraphCommit, TradeHistoryResult, TradeHistory } from '~/types/commits';
+import {
+    PendingCommits,
+    TradeHistory,
+    TradeHistoryResult,
+} from '~/types/commits';
 import { V2_SUPPORTED_NETWORKS } from '~/types/networks';
 import {
-    PoolCommitStats,
-    TradeStatsAPIResponse,
-    PoolCommitStatsAPIResponse,
     NextPoolState,
     NextPoolStateAPIResponse,
+    PoolCommitStats,
+    PoolCommitStatsAPIResponse,
+    TradeStatsAPIResponse,
 } from '~/types/pools';
-import { pendingCommitsQuery } from './subgraph';
+
+import {
+    CommitEnum,
+    KnownNetwork,
+    NETWORKS,
+} from '@tracer-protocol/pools-js';
+
 import { formatBN } from '../converters';
 
 // Base API URL
@@ -26,40 +34,12 @@ export const fetchPendingCommits: (
         to?: number;
         account?: string;
     },
+    // @ts-ignore
 ) => Promise<PendingCommits[]> = async (network, { pool, account }) => {
-    if (!knownNetworkToSubgraphUrl[network]) {
+    if (true){
         return [];
     }
 
-    const tracerCommits = await fetch(knownNetworkToSubgraphUrl[network] as string, {
-        method: 'POST',
-        body: JSON.stringify({
-            query: pendingCommitsQuery({ pool, account }),
-        }),
-    })
-        .then((res) => res.json())
-        .then((allCommits) => {
-            const parsedCommits: PendingCommits[] = [];
-            allCommits.data.commits.forEach((commit: GraphCommit) => {
-                parsedCommits.push({
-                    amount: commit.amount,
-                    commitType: CommitTypeMap[commit.type],
-                    from: commit.trader,
-                    txnHash: commit.txnHash,
-                    timestamp: parseInt(commit.created),
-                    pool: commit.pool,
-                    commitID: commit.txnHash,
-                    updateIntervalId: parseInt(commit.updateIntervalId),
-                });
-            });
-
-            return parsedCommits;
-        })
-        .catch((err) => {
-            console.error('Failed to fetch commits', err);
-            return [];
-        });
-    return tracerCommits;
 };
 
 export const fetchCommitHistory: (params: {

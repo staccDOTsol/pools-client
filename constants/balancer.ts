@@ -1,5 +1,9 @@
-import { KnownNetwork, NETWORKS } from '@tracer-protocol/pools-js';
 import { BalancerInfo } from '~/types/balancer';
+
+import {
+    KnownNetwork,
+    NETWORKS,
+} from '@tracer-protocol/pools-js';
 
 // vault address is the same on all chains
 export const BALANCER_VAULT_ADDRESS = '0xBA12222222228d8Ba445958a75a0704d566BF2C8';
@@ -10,7 +14,7 @@ export const balancerConfig: Partial<Record<KnownNetwork, BalancerInfo>> = {
         baseUri: 'https://arbitrum.balancer.fi/#/trade',
         pools: [],
         // USDC
-        recommendedSwapToken: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8',
+        recommendedSwapToken: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
         leveragedPools: [
             // deprecated 3-BTC/USD
             '0x0d9fEC3a621387A3ceC87DA24c4aeC7cA261C856',

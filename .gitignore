@@ -22,3 +22,6 @@ yarn-error.log*
 
 # Testing
 coverage
+
+# Local Netlify folder
+.netlify

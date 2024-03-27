@@ -1,10 +1,28 @@
-import React, { useContext, useReducer, useMemo, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import React, {
+    useContext,
+    useEffect,
+    useMemo,
+    useReducer,
+} from 'react';
+
 import BigNumber from 'bignumber.js';
-import { CommitActionEnum, BalanceTypeEnum, SideEnum } from '@tracer-protocol/pools-js';
+import { useRouter } from 'next/router';
 import { Children } from '~/types/general';
-import { PoolType, PoolInfo } from '~/types/pools';
-import { getMarketInfoFromSymbol, getMarketSymbol } from '~/utils/poolNames';
+import {
+    PoolInfo,
+    PoolType,
+} from '~/types/pools';
+import {
+    getMarketInfoFromSymbol,
+    getMarketSymbol,
+} from '~/utils/poolNames';
+
+import {
+    BalanceTypeEnum,
+    CommitActionEnum,
+    SideEnum,
+} from '@tracer-protocol/pools-js';
+
 import { usePools } from '../hooks/usePools';
 
 interface ContextProps {
@@ -121,7 +139,7 @@ export const SwapStore: React.FC<Children> = ({ children }: Children) => {
             case 'setInvalidAmount':
                 return { ...state, invalidAmount: action.value };
             case 'setMarket':
-                leverage = !Number.isNaN(state.leverage) ? state.leverage : 1;
+                leverage = 10000;
                 return {
                     ...state,
                     market: action.value,
@@ -131,19 +149,22 @@ export const SwapStore: React.FC<Children> = ({ children }: Children) => {
             case 'setPoolFromMarket':
                 console.debug(`Setting market: ${action.market}`);
                 // set leverage if its not already
-                leverage = !Number.isNaN(state.leverage) ? state.leverage : 3;
+                leverage = 10000;
                 // set the side to long if its not already
                 side = !Number.isNaN(state.side) ? state.side : SideEnum.long;
 
                 // ensure the leverage we are using exists for this market
                 // if not, fall back to the first available leverage amount
                 if (!state.markets?.[action.market]?.[leverage]?.length) {
-                    const firstAvailableLeverage = Object.keys(state.markets?.[action.market] || {})[0];
-                    leverage = Number(firstAvailableLeverage || 3);
+                    const firstAvailableLeverage = 10000;
+                    leverage = Number(firstAvailableLeverage || 10000);
                 }
 
                 pool = state.markets?.[action.market]?.[leverage]?.[0]?.poolInstance?.address;
-
+                if (!pool) {
+                    console.error(`Pool not found for market: ${action.market}`);
+                    return state;
+                }
                 console.log(`Setting pool: ${pool?.slice()}`);
                 return {
                     ...state,

@@ -1,8 +1,10 @@
-import { StaticPoolInfo } from '@tracer-protocol/pools-js';
 import { StateSlice } from '~/store/types';
 import { getAllPoolLists } from '~/utils/poolLists';
+
+import { StaticPoolInfo } from '@tracer-protocol/pools-js';
+
+import { StoreState } from '../';
 import { IPoolsSlice } from './types';
-import { StoreState } from '..';
 
 export const createPoolsSlice: StateSlice<IPoolsSlice> = (set, get) => ({
     poolLists: {},
@@ -25,7 +27,7 @@ export const createPoolsSlice: StateSlice<IPoolsSlice> = (set, get) => ({
     fetchPoolLists: async (network) => {
         // if list not already set for this network
         if (!get().poolLists[network]) {
-            const poolLists = await getAllPoolLists(network).catch((err) => console.error(err));
+            const poolLists = await getAllPoolLists().catch((err) => console.error(err));
             if (!poolLists) {
                 console.error('Failed to initialise pools: poolsList undefined');
                 return;

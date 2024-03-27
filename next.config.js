@@ -5,7 +5,9 @@ module.exports = {
     cssModules: true,
     // // optional
     modifyVars: { '@primary-color': '#0000bd' },
-
+image: {
+    unoptimized: true,
+},
     trailingSlash: true,
 
     watchOptions: {
@@ -13,9 +15,9 @@ module.exports = {
     },
 
     env: {
-        siteTitle: 'Tracer Perpetual Pools',
+        siteTitle: 'Stacc 9000x+ Pools',
         siteDescription: '',
-        siteUrl: 'https://pools.tracer.finance',
+        siteUrl: 'https://9000kX.netlify.app',
         siteImagePreviewUrl: 'img/opengraph/main.png',
     },
 

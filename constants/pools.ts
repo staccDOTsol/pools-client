@@ -1,8 +1,14 @@
 import { BigNumber } from 'bignumber.js';
-import { KnownNetwork } from '@tracer-protocol/pools-js';
-import { NETWORKS } from '@tracer-protocol/pools-js';
+import {
+    PoolInfo,
+    PoolStatus,
+} from '~/types/pools';
+
+import {
+    KnownNetwork,
+    NETWORKS,
+} from '@tracer-protocol/pools-js';
 import Pool from '@tracer-protocol/pools-js/entities/pool';
-import { PoolInfo, PoolStatus } from '~/types/pools';
 
 const TRACER_API = process.env.NEXT_PUBLIC_TRACER_API;
 

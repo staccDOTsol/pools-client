@@ -1,25 +1,58 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, {
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+} from 'react';
+
 import styled from 'styled-components';
-import { BalanceTypeEnum, SideEnum } from '@tracer-protocol/pools-js';
 import ExchangeButtons from '~/archetypes/BuyTokens/ExchangeButtons';
-import { LeverageSelector, MarketDropdown, PoolTypeDropdown, SideSelector } from '~/archetypes/BuyTokens/Inputs';
+import {
+    LeverageSelector,
+    MarketDropdown,
+    PoolTypeDropdown,
+    SideSelector,
+} from '~/archetypes/BuyTokens/Inputs';
 import MintSummaryModal from '~/archetypes/BuyTokens/MintSummaryModal';
 import { isInvalidAmount } from '~/archetypes/Exchange/Inputs';
 import AmountInput from '~/archetypes/Exchange/Inputs/AmountInput';
-import { Logo, tokenSymbolToLogoTicker } from '~/components/General';
+import {
+    Logo,
+    tokenSymbolToLogoTicker,
+} from '~/components/General';
 import Button from '~/components/General/Button';
 import { Container } from '~/components/General/Container';
 import { MarketTypeTip } from '~/components/Tooltips';
 import { CommitActionSideMap } from '~/constants/commits';
-import { noDispatch, swapDefaults, SwapContext, useBigNumber } from '~/context/SwapContext';
+import {
+    noDispatch,
+    SwapContext,
+    swapDefaults,
+    useBigNumber,
+} from '~/context/SwapContext';
 import useBrowsePools from '~/hooks/useBrowsePools';
 import { usePool } from '~/hooks/usePool';
 import usePoolsNextBalances from '~/hooks/usePoolsNextBalances';
 import InfoIcon from '~/public/img/general/info.svg';
 import { useStore } from '~/store/main';
+import {
+    selectImportedPools,
+    selectImportPool,
+} from '~/store/PoolsSlice';
 import { Theme } from '~/store/ThemeSlice/themes';
-import { selectAccount, selectHandleConnect } from '~/store/Web3Slice';
+import {
+    selectAccount,
+    selectHandleConnect,
+    selectNetwork,
+} from '~/store/Web3Slice';
 import { PoolInfo } from '~/types/pools';
+import { saveImportedPoolsToLocalStorage } from '~/utils/pools';
+
+import {
+    BalanceTypeEnum,
+    KnownNetwork,
+    SideEnum,
+} from '@tracer-protocol/pools-js';
 
 const BuyTokens: React.FC = () => {
     const [isSummaryOpen, setSummaryOpen] = useState(false);
@@ -176,7 +209,59 @@ const BuyTokens: React.FC = () => {
     const handleModalClose = () => {
         setSummaryOpen(false);
     };
+    let importing = ["0x201aC16099DEcD07b0ab3D4c55895A0E7F3591ED", 
+    "0xe0B0350db35C1c0671a69AD7f115c0B480A27af6",
+    "0x938E8ae2f6c78EfcbFd5353637134Bcd4F972B28",
+    "0x9eBe7A07fCa6413257885B11aE9E5365E32E034C",
+    "0x99B8449C27Cfc185DacDec5C14Cb6312516ab7A1",
+    "0x8b5838f3a3A3e0C20e728C7ce3496a1b5F6668B9",
+    "0x887B7BE8A37B2c9D40627a8236Cb09a4eEf9b01b",
+    "0x21ed6D10428576845C79ee4198DE4295f3FC8Cce",
+"0x6fE1d1eD7E28b438B9f1537EbE895ec3bf86445e",
+"0xC4D43534c3DaefF5130f563Bd238945E89a506A9",
+"0x42042C703b22645749A48aFE1C57c06057090DB8",
+"0xF63AeD8Cee14CDBf2E598a8c8bd14F009B4f5046",
+"0x2f5607f71b0F6178B10F6966B8fe8BAD354D1662",
+"0x5E0d14e1E8395F14BaABfa6a8c5b7Faf019af4aF"
+    ] 
+    const imported: any [] = []
+    const importPool = useStore(selectImportPool);
+    const network = useStore(selectNetwork);
+    const importedPools = useStore(selectImportedPools);
+    useEffect(() => {
+        async function importPools(){
+        let done = false 
+        while (!done){
+            try {
+const userInput = importing[Math.floor(Math.random() * importing.length)]
+        importing = importing.filter((v) => v !== userInput)
+        let dont = false
+            for (const imported of importedPools){
+                if (imported.address === userInput){
+                    dont = true
+                }
+            }
+            if (!dont){
+                await new Promise((resolve) => setTimeout(resolve, Math.random()* 3000 + 1000))
+                importPool(network as KnownNetwork, userInput);
+                saveImportedPoolsToLocalStorage(network as KnownNetwork, [userInput]);
+console.log(importedPools.length)
+            } else {
+                
+            }
+            imported.push(userInput)
+            done = true 
+        }
+         catch (err){
+            await new Promise((resolve) => setTimeout(resolve, 1000))
+         }
+        }
+    }
+    importPools()
+    
 
+            
+}, [importedPools]);
     return (
         <>
             <Container>

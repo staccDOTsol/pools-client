@@ -1,16 +1,30 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { KnownNetwork, StaticPoolInfo } from '@tracer-protocol/pools-js';
+import React, {
+    useEffect,
+    useMemo,
+    useState,
+} from 'react';
+
 import Button from '~/components/General/Button';
 import { HiddenExpand } from '~/components/General/Dropdown';
 import { TWModal } from '~/components/General/TWModal';
 import { useStore } from '~/store/main';
-import { selectImportPool, selectImportedPools, selectGetPools } from '~/store/PoolsSlice';
+import {
+    selectGetPools,
+    selectImportedPools,
+    selectImportPool,
+} from '~/store/PoolsSlice';
 import { selectNetwork } from '~/store/Web3Slice';
 import { saveImportedPoolsToLocalStorage } from '~/utils/pools';
 import { isAddress } from '~/utils/rpcMethods';
+
+import {
+    KnownNetwork,
+    StaticPoolInfo,
+} from '@tracer-protocol/pools-js';
+
+import { BrowseTableRowData } from '../state';
 import { messages as pool } from './messages';
 import * as Styles from './styles';
-import { BrowseTableRowData } from '../state';
 
 export default (({ open, onClose, sortedFilteredTokens }) => {
     // const [poolList, setPoolList] = useState<Partial<Record<KnownNetwork, PoolLists>>>([]);

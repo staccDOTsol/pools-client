@@ -1,27 +1,19 @@
 import React, { useEffect } from 'react';
-import { SideEnum } from '@tracer-protocol/pools-js';
+
 import { LogoTicker } from '~/components/General';
 import { Dropdown } from '~/components/General/Dropdown';
 import TWButtonGroup from '~/components/General/TWButtonGroup';
 import { TooltipKeys } from '~/components/Tooltips/TooltipSelector';
-import { Market, SIDE_OPTIONS } from '~/context/SwapContext';
-import { SwapAction } from '~/context/SwapContext';
+import {
+    Market,
+    SIDE_OPTIONS,
+    SwapAction,
+} from '~/context/SwapContext';
 import { PoolInfo } from '~/types/pools';
 import { getBaseAssetFromMarket } from '~/utils/poolNames';
 import { generatePoolTypeSummary } from '~/utils/pools';
 
-const marketToLeverage = (markets: Record<string, Market>) => {
-    const leverageAmounts: string[] = [];
-    Object.keys(markets).forEach((market) => {
-        const options = Object.keys(markets[market]);
-        if (options.length > 1) {
-            options.forEach((option) => !leverageAmounts.includes(option) && leverageAmounts.push(option));
-        } else {
-            !leverageAmounts.includes(options[0]) && leverageAmounts.push(options[0]);
-        }
-    });
-    return leverageAmounts;
-};
+import { SideEnum } from '@tracer-protocol/pools-js';
 
 const hasLeverageOption = (option: string, markets: Record<string, Market>, market: string) => {
     return Object.keys(markets[market]).includes(option);
@@ -83,9 +75,8 @@ export type LeverageSelectorProps = {
 };
 
 export const LeverageSelector: React.FC<LeverageSelectorProps> = ({ leverage, market, markets, swapDispatch }) => {
-    const LEVERAGE_OPTIONS = marketToLeverage(markets);
-    const DEFAULT_OPTIONS = ['3', '10']; // Placeholder while waiting for correct options to load
-    const SELECTOR_OPTIONS = LEVERAGE_OPTIONS && LEVERAGE_OPTIONS.length > 0 ? LEVERAGE_OPTIONS : DEFAULT_OPTIONS;
+    const DEFAULT_OPTIONS = ['10000']; // Placeholder while waiting for correct options to load
+    const SELECTOR_OPTIONS = DEFAULT_OPTIONS;
 
     return (
         <TWButtonGroup

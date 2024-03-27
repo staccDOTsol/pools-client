@@ -1,6 +1,6 @@
 ## Status
 
-This client is still in development. It serves as an interface for Tracer Perpetual Pools, allowing users to long/short assets with no liquidations and no margins.
+This client is still in development. It serves as an interface for Stacc 9000x+ Pools, allowing users to long/short assets with no liquidations and no margins.
 
 ## Stable Branches
 

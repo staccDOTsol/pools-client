@@ -1,12 +1,34 @@
-import { ethers, BigNumber as EthersBigNumber } from 'ethers';
 import BigNumber from 'bignumber.js';
-import { PoolCommitter__factory, ERC20__factory } from '@tracer-protocol/perpetual-pools-contracts/types';
-import { BalanceTypeEnum, KnownNetwork, Pool } from '@tracer-protocol/pools-js';
-import { AggregateBalances, TradeStats, PoolInfo } from '~/types/pools';
-import { NextPoolState } from '~/types/pools';
+import {
+    BigNumber as EthersBigNumber,
+    ethers,
+} from 'ethers';
+import {
+    AggregateBalances,
+    NextPoolState,
+    PoolInfo,
+    TradeStats,
+} from '~/types/pools';
+
+import {
+    ERC20__factory,
+    PoolCommitter__factory,
+} from '@tracer-protocol/perpetual-pools-contracts/types';
+import {
+    BalanceTypeEnum,
+    KnownNetwork,
+    Pool,
+} from '@tracer-protocol/pools-js';
+
 import { formatSeconds } from './converters';
-import { BNFromString, marketRegex } from './helpers';
-import { fetchTradeStats as _fetchTradeStats, fetchNextPoolState as _fetchNextPoolState } from './tracerAPI';
+import {
+    BNFromString,
+    marketRegex,
+} from './helpers';
+import {
+    fetchNextPoolState as _fetchNextPoolState,
+    fetchTradeStats as _fetchTradeStats,
+} from './tracerAPI';
 
 export const fetchTokenBalances: (
     tokens: string[],

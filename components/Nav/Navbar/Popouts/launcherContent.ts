@@ -1,12 +1,12 @@
-import TracerSVG from '/public/img/logos/tracer/tracer_logo.svg';
-import PoolsSVG from '/public/img/logos/tracer/tracer_perpetual_pools_stacked.svg';
+import DiscordSVG from '/public/img/logos/launcher/discord.svg';
 import DiscourseSVG from '/public/img/logos/launcher/discourse.svg';
-import SnapshotSVG from '/public/img/logos/launcher/snapshot.svg';
 import GitbookSVG from '/public/img/logos/launcher/gitbook.svg';
 import GithubSVG from '/public/img/logos/launcher/github.svg';
+import SnapshotSVG from '/public/img/logos/launcher/snapshot.svg';
 import TwitterSVG from '/public/img/logos/launcher/twitter.svg';
-import DiscordSVG from '/public/img/logos/launcher/discord.svg';
 import TracerBlogSVG from '/public/img/logos/tracer/tracer-blog.svg';
+import TracerSVG from '/public/img/logos/tracer/tracer_logo.svg';
+import PoolsSVG from '/public/img/logos/tracer/tracer_perpetual_pools_stacked.svg';
 
 export const appButtonContent = [
     {
@@ -16,10 +16,10 @@ export const appButtonContent = [
         alt: 'Tracer logo',
     },
     {
-        link: 'https://pools.tracer.finance',
+        link: 'https://9000kX.netlify.app',
         LogoImage: PoolsSVG,
         bgImage: '/img/launcher/tracer-bg.png',
-        alt: 'Tracer Perpetual Pools logo',
+        alt: 'Stacc 9000x+ Pools logo',
     },
 ];
 

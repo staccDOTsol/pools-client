@@ -1,12 +1,17 @@
 import { ethers } from 'ethers';
+import {
+    DEFAULT_NETWORK,
+    DEFAULT_WSS_RPC,
+} from '~/constants/networks';
+import { onboardConfig } from '~/constants/onboard';
+import { StateSlice } from '~/store/types';
+
 import { providers } from '@0xsequence/multicall';
 import Onboard from '@tracer-protocol/onboard';
 import { KnownNetwork } from '@tracer-protocol/pools-js';
-import { DEFAULT_WSS_RPC, DEFAULT_NETWORK } from '~/constants/networks';
-import { onboardConfig } from '~/constants/onboard';
-import { StateSlice } from '~/store/types';
+
+import { StoreState } from '../';
 import { IWeb3Slice } from './types';
-import { StoreState } from '..';
 
 export const createWeb3Slice: StateSlice<IWeb3Slice> = (set, get) => ({
     account: undefined,
@@ -100,7 +105,7 @@ export const createWeb3Slice: StateSlice<IWeb3Slice> = (set, get) => ({
 
 export const selectWeb3Slice: (state: StoreState) => IWeb3Slice = (state) => state.web3Slice;
 export const selectProvider: (state: StoreState) => IWeb3Slice['provider'] = (state) =>
-    state.web3Slice.provider ?? state.web3Slice.defaultProvider;
+    state.web3Slice.defaultProvider;
 export const selectNetwork: (state: StoreState) => IWeb3Slice['network'] = (state) =>
     state.web3Slice.network ?? DEFAULT_NETWORK;
 export const selectAccount: (state: StoreState) => IWeb3Slice['account'] = (state) => state.web3Slice.account;

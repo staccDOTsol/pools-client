@@ -1,9 +1,9 @@
-import GithubSVG from '/public/img/logos/launcher/github.svg';
-import SnapshotSVG from '/public/img/logos/launcher/snapshot.svg';
+import DiscordSVG from '/public/img/logos/launcher/discord.svg';
 import DiscourseSVG from '/public/img/logos/launcher/discourse.svg';
 import GitbookSVG from '/public/img/logos/launcher/gitbook.svg';
+import GithubSVG from '/public/img/logos/launcher/github.svg';
+import SnapshotSVG from '/public/img/logos/launcher/snapshot.svg';
 import TwitterSVG from '/public/img/logos/launcher/twitter.svg';
-import DiscordSVG from '/public/img/logos/launcher/discord.svg';
 import TracerBlogSVG from '/public/img/logos/tracer/tracer-blog.svg';
 
 export const menuContent = [
@@ -15,7 +15,7 @@ export const menuContent = [
     {
         link: '/',
         logo: '/img/logos/tracer/products/perpetual-pools.svg',
-        alt: 'Tracer Perpetual Pools',
+        alt: 'Stacc 9000x+ Pools',
     },
 ];
 
